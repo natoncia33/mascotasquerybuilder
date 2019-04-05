@@ -14,9 +14,6 @@ class MascotaController extends Controller
      */
     public function index()
     {
-        //ELOQUENT
-        // $mascotas=mascota::orderBy('id','DESC')->paginate(3);
-        // return view('mascota.index',compact('mascotas')); 
 
         //QUERYBUILDER
         $mascotas = DB::table('mascotas')->paginate(3);;
@@ -48,11 +45,7 @@ class MascotaController extends Controller
      */
     public function store(Request $request)
     {
-        //ELOQUENT
-        // $this->validate($request,[ 'nombre'=>'required', 'edad'=>'required', 'especie'=>'required', 'clasificacion'=>'required', 'peso'=>'required', 'paisorigen'=>'required']);
-        // Mascota::create($request->all());
-        // return redirect()->route('mascota.index')->with('exito','La mascota fue registrada !!');
-
+      
         //QUERYBUILDER
         DB::table('mascotas')->insert(
             ['nombre' => $request->nombre,
@@ -75,10 +68,6 @@ class MascotaController extends Controller
      */
     public function show($id)
     {
-        //ELOQUENT
-        // $mascota=Mascota::find($id);
-        // return view('mascota.show',compact('mascota'));
-
         //QUERYBUILDER
         $mascota = DB::table('mascotas')->where('id', $id)->first();
         return view('mascota.show',compact('mascota'));
@@ -106,11 +95,7 @@ class MascotaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        // $this->validate($request,[ 'nombre'=>'required', 'edad'=>'required', 'especie'=>'required', 'clasificacion'=>'required', 'peso'=>'required', 'paisorigen'=>'required']);
-        // Mascota::find($id)->update($request->all());
-        // return redirect()->route('mascota.index')->with('success','Registro actualizado satisfactoriamente');
- 
+        //QUERYBUILDER
         DB::table('mascotas')
             ->where('id', $id)
             ->update( ['nombre' => $request->nombre,
@@ -134,10 +119,6 @@ class MascotaController extends Controller
      */
     public function destroy($id)
     {
-        //
-        // Mascota::find($id)->delete();
-        // return redirect()->route('mascota.index')->with('success','Registro eliminado satisfactoriamente');
-        
         DB::table('mascotas')->where('id', $id)->delete();
         return redirect()->route('mascota.index')->with('success','Registro eliminado satisfactoriamente');
 
