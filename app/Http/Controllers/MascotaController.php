@@ -45,7 +45,21 @@ class MascotaController extends Controller
      */
     public function store(Request $request)
     {
-      
+        $v = \Validator::make($request->all(), [
+            
+            'nombre' => 'required',
+            'edad' => 'numeric|required|min:1|max:99',
+            'especie'    => 'required',
+            'clasificacion' => 'required',
+            'peso' => 'numeric|required|min:1|max:9999',
+            'paisorigen' => 'required'
+
+        ]);
+ 
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
         //QUERYBUILDER
         DB::table('mascotas')->insert(
             ['nombre' => $request->nombre,
