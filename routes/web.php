@@ -12,3 +12,6 @@
 */
 
 Route::resource('mascota','MascotaController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
