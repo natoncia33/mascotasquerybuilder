@@ -79,15 +79,12 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Welcome to the jungle
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <a href="{{ route('propietario.index') }}" class="btn btn-info" >Lista de Propietarios</a>
+                <a href="{{ route('mascota.index') }}" class="btn btn-info" >Lista de Mascotas</a>
                 </div>
             </div>
         </div>

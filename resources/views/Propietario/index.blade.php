@@ -5,61 +5,54 @@
     <div class="col-md-8 col-md-offset-2">
       <div class="panel panel-default">
         <div class="panel-body">
-          <div class="pull-left"><h3>Lista Mascotas</h3></div>
-            <div class="pull-right">
-              <div class="btn-group">
-                <a href="{{ route('mascota.create') }}" class="btn btn-info" >Añadir Mascota</a>
-              </div>
-            </div>
-
-          <div class="col-md-3 col-md-offset-4">
+          <div class="pull-left"><h3>Lista Propietarios</h3></div>
+          <div class="pull-right">
             <div class="btn-group">
-              <a href="{{ route('propietario.index') }}" class="btn btn-info" >Propietarios</a>
+              <a href="{{ route('propietario.create') }}" class="btn btn-info" >Añadir Propietario</a>
             </div>
           </div>
-
           <div class="table-container">
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
-               <th>Nombre</th>
-               <th>Especie</th>
-               <th>Id propietario </th>
+               <th>Nombres</th>
+               <th>Apellidos</th>
                
+               <th>Mascotas</th>
                <th>Detalle</th>
                <th>Editar</th>
                <th>Eliminar</th>
              </thead>
              <tbody>
-              @if($mascotas->count())  
-              @foreach($mascotas as $mascota)  
+              @if($propietarios->count())  
+              @foreach($propietarios as $propietario)  
               <tr>
                   <td>
-                      {{$mascota->nombre}}
+                      {{$propietario->nombre}}
                   </td>
 
                   <td>
-                      {{$mascota->especie}}
+                      {{$propietario->apellido}}
                   </td>
 
                   <td> 
-                      <a href="{{action('PropietarioController@show', $mascota->propietario_id)}}" >
-                             {{$mascota->propietario_id}}
+                      <a href="{{action('PropietarioController@getMascotas', $propietario->id)}}" >
+                         <span class="glyphicon glyphicon-heart"></span>
                       </a>
-                  </td> 
+                  </td>
 
                   <td> 
-                      <a href="{{action('MascotaController@show', $mascota->id)}}" >
+                      <a href="{{action('PropietarioController@show', $propietario->id)}}" >
                         <span class="glyphicon glyphicon-eye-open"></span>
                       </a>
                   </td>
 
                   <td>
-                      <a href="{{action('MascotaController@edit', $mascota->id)}}" >
+                      <a href="{{action('PropietarioController@edit', $propietario->id)}}" >
                       <span class="glyphicon glyphicon-edit"></span>
                       </a>
                   </td>
                   <td>
-                    <form action="{{action('MascotaController@destroy', $mascota->id)}}" method="post">
+                    <form action="{{action('PropietarioController@destroy', $propietario->id)}}" method="post">
                         {{csrf_field()}}
                         <input name="_method" type="hidden" value="DELETE">
 
@@ -79,7 +72,7 @@
           </table>
         </div>
       </div>
-      {{ $mascotas->links() }}
+      {{ $propietarios->links() }}
     </div>
   </div>
 </section>

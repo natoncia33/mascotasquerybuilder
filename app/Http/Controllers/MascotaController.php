@@ -14,16 +14,10 @@ class MascotaController extends Controller
      */
     public function index()
     {
-
-        //QUERYBUILDER
         $mascotas = DB::table('mascotas')->paginate(3);;
+        $propietarios = DB::table('propietarios')->paginate(3);
 
-        foreach ($mascotas as $mascota)
-        {
-            //echo $mascota->nombre;
-        }
-        return view('mascota.index',compact('mascotas'));
-
+        return view('mascota.index',compact('mascotas','propietarios'));
     }
 
     /**
@@ -34,7 +28,8 @@ class MascotaController extends Controller
     public function create()
     {
         //
-        return view('Mascota.create');
+        $propietarios = DB::table('propietarios')->paginate(3);
+        return view('Mascota.create', compact('propietarios')   );
     }
 
     /**
@@ -45,6 +40,8 @@ class MascotaController extends Controller
      */
     public function store(Request $request)
     {
+        // var_dump($request->all());
+        // die();
         $v = \Validator::make($request->all(), [
             
             'nombre' => 'required',
@@ -52,26 +49,30 @@ class MascotaController extends Controller
             'especie'    => 'required',
             'clasificacion' => 'required',
             'peso' => 'numeric|required|min:1|max:9999',
-            'paisorigen' => 'required'
+            'paisorigen' => 'required',
+            'propietarioid'  => 'required'
 
         ]);
- 
+            
         if ($v->fails())
         {
             return redirect()->back()->withInput()->withErrors($v->errors());
         }
-        //QUERYBUILDER
         DB::table('mascotas')->insert(
             ['nombre' => $request->nombre,
              'edad' => $request->edad,
              'especie' => $request->especie,
              'clasificacion' => $request->clasificacion,
              'peso' => $request->peso,
-             'paisorigen' => $request->paisorigen
+             'paisorigen' => $request->paisorigen,
+             'propietario_id'=>$request->propietarioid
              ]
         );
-        return redirect()->route('mascota.index')->with('exito','La mascota fue registrada !!');
+        $mascotas = DB::table('mascotas')->where('propietario_id',$request->propietarioid)->paginate(3);
+        return redirect()->route('propietario.index',compact('mascotas'))->with('exito','La mascota fue registrada !!');
         
+     
+        //return view('mascota.index',compact('mascotas'));
     }
 
     /**
@@ -96,7 +97,10 @@ class MascotaController extends Controller
     public function edit($id)
     {
         // 
+
         $mascota=Mascota::find($id);
+        // return $mascota;
+        // die();
         return view('mascota.edit',compact('mascota'));
     }
 
