@@ -15,6 +15,7 @@ class CreateMascotasTable extends Migration
     {
         Schema::create('mascotas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('propietario_id')->unsigned();
             $table->string('nombre');
             $table->integer('edad');
             $table->string('especie');
@@ -22,6 +23,8 @@ class CreateMascotasTable extends Migration
             $table->integer('peso');
             $table->string('paisorigen');
             $table->timestamps();
+
+            $table->foreign('propietario_id')->references('id')->on('propietarios');
         });
     }
 

@@ -8,4 +8,11 @@ class mascota extends Model
 {
     //
     protected $fillable = ['nombre', 'edad','especie','clasificacion','peso','paisorigen'];
+
+    public function propietario()
+    {
+        return $this->belongsTo(Propietario::class);
+    }
+
+     
 }

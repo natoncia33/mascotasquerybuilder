@@ -11,7 +11,11 @@
 |
 */
 
-Route::resource('mascota','MascotaController');
-Auth::routes();
+// Route::resource('mascota','MascotaController');
+Route::resources([
+    'mascota' => 'MascotaController',
+    'propietario' => 'PropietarioController'
+]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', ['uses' => 'Controller@index', 'as' => 'home']);
+Route::get('mismascotas/{id}','PropietarioController@getMascotas');
